@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <!-- 紧凑型图表容器 -->
+  <div id="container" style="height: 290px; width: 290px; margin: 10px auto"></div>
+
+  <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+  <script>
+    const chart = echarts.init(document.getElementById('container'));
+    
+    const option = {
+      backgroundColor: 'transparent',
+      grid: {
+        top: 5,
+        bottom: 5,
+        left: 5,
+        right: 5,
+        containLabel: true
+      },
+      series: [{
+        type: 'pie',
+        radius: ['15%', '65%'],
+        roseType: 'radius',
+        label: {
+          color: '#e0e0e0',
+          fontSize: 9,  // 更小的字号
+          formatter: (params) => {
+            // 对长文本进行换行处理
+            const name = params.name.length > 4 ? 
+              params.name.replace(/(.{3})/, '$1\n') : params.name;
+            return `${name}\n${params.value}`;
+          },
+          padding: [0, -5], // 调整标签位置
+          align: 'center',
+          lineHeight: 12
+        },
+        labelLine: {
+          showAbove: true,
+          lineStyle: {
+            color: 'rgba(224, 224, 224, 0.3)',
+            width: 0.5
+          },
+          length: 3,
+          length2: 8,
+          smooth: 0.2
+        },
+        itemStyle: {
+          borderRadius: 2,
+          borderWidth: 0.3,
+          borderColor: 'rgba(0,0,0,0.05)'
+        },
+        data: [
+          { value: 86, name: '餐饮' },
+          { value: 54, name: '零售' },
+          { value: 48, name: '居民服务' },
+          { value: 7, name: '文体娱乐' },  // 缩短标签
+          { value: 6, name: '教育服务' },   // 缩短标签
+          { value: 5, name: '商务服务' },   // 缩短标签
+          { value: 1, name: '快递' },       // 缩短标签
+          { value: 1, name: 'IT服务' },     // 缩短标签
+          { value: 1, name: '金融' }        // 缩短标签
+        ]
+      }]
+    };
+
+    chart.setOption(option);
+    window.addEventListener('resize', chart.resize);
+  </script>
+</body>
+</html>
